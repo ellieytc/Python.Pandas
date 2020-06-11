@@ -1,0 +1,58 @@
+#使用Series建立DataFrame: pandas.concat([Series1,Series2,...], axis=1)
+#建立Beijing, HongKong, Singapore 2020-2022 3月的平均溫度
+import pandas as pd
+years = range(2020, 2023)
+beijing = pd.Series([20, 21, 19], index = years)
+hongkong = pd.Series([25, 26, 27], index = years)
+singapore = pd.Series([30, 29, 31], index = years)
+citydf0 = pd.concat([beijing, hongkong, singapore], axis=0)
+print(type(citydf0))
+print(citydf0)
+
+print('-'*50)
+
+citydf1 = pd.concat([beijing, hongkong, singapore], axis = 1)
+print(type(citydf1))
+print(citydf1)
+
+#設定欄位名稱
+import pandas as pd
+years = range(2020, 2023)
+beijing = pd.Series([20, 21, 19], index = years)
+hongkong = pd.Series([25, 26, 27], index = years)
+singapore = pd.Series([30, 29, 31], index = years)
+citydf = pd.concat([beijing, hongkong, singapore], axis = 1)
+citydf.columns = ['beijing', 'hongknog', 'singapore']
+print(citydf)
+
+#在Series物件使用name屬性
+import pandas as pd
+years = range(2020, 2023)
+beijing = pd.Series([20, 21, 19], index = years, name = 'Beijing')
+hongkong = pd.Series([25, 26, 27], index = years, name = 'HongKong')
+singapore = pd.Series([30, 29, 31], index = years, name = 'Singapore')
+citydf = pd.concat([beijing, hongkong, singapore], axis = 1)
+print(citydf)
+
+#使用dict的list建立DataFrame
+import pandas as pd
+data = [{'apple': 50, 'Orange': 30, 'Grape': 80}, {'apple':50, 'Grape': 80}]
+fruits = pd.DataFrame(data)
+print(fruits)
+
+#使用dict建立DataFrame
+import pandas as pd
+cities = {'country': ['China', 'Japan', 'Singapore'], 
+          'town': ['Beijing', 'Tokyo', 'Singapore'],
+          'population': [2000, 1600, 600]}
+rowindex = ['first', 'second', 'third']
+citydf = pd.DataFrame(cities, index = rowindex)
+print(citydf)
+
+#把columns當作index
+import pandas as pd
+cities = {'country': ['China', 'Japan', 'Singapore'], 
+          'town': ['Beijing', 'Tokyo', 'Singapore'],
+          'population': [2000, 1600, 600]}
+citydf = pd.DataFrame(cities, columns=['town', 'population'], index = cities['country'])
+print(citydf)
