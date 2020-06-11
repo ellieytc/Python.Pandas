@@ -55,6 +55,9 @@
   - plot(x=None, y=None, kind='xx', title=None, legend=True, rot=None) #kind=line, bar, barh, host, boxscatter. #rot旋轉刻度
     
 ## 時間序列(Time Series)
+  - Python的時間模組datetime
+  - datetime應用在Series物件建立時間序列
+  - Pandas處理時間序列的工具
 
 
 *reference : 洪錦魁(2019)。Python最強入門邁向數據科學之路:王者歸來(第二版)。臺北市：深智數位。
