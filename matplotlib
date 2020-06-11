@@ -1,0 +1,98 @@
+#使用Series繪折線圖表
+#tw是紀錄1950-2010年間，每隔10年台灣人口的數據，單位是萬人
+import pandas as pd
+import matplotlib.pyplot as plt
+
+population = [860, 1100, 1450, 1800, 2020, 2200, 2260]
+tw = pd.Series(population, index=range(1950, 2011, 10))
+tw.plot(title='Population in Taiwan')
+plt.xlabel('Year')
+plt.ylabel('Population')
+plt.show()
+
+#使用DataFrame繪圖
+import pandas as pd
+import matplotlib.pyplot as plt
+cities = {'population': [1000, 850, 800, 1500, 600, 800], 
+          'town': ['New York', 'Chicago', 'Bankok', 'Tokyo', 'Singapore', 'Hongkong']}
+tw = pd.DataFrame(cities, columns=['population'], index=cities['town'])
+tw.plot(title='Population in Taiwan')
+plt.xlabel('City')
+plt.ylabel('Population')
+plt.show()
+
+#使用直條圖
+tw.plot(title='Population in the world', kind='bar')
+
+#一張圖表含有不同數值
+#新增城市面積的數據
+import pandas as pd
+import matplotlib.pyplot as plt
+cities = {'population': [1000, 850, 800, 1500, 600, 800], 
+          'area': [400, 500, 850, 300, 200, 320],
+          'town': ['New York', 'Chicago', 'Bankok', 'Tokyo', 'Singapore', 'Hongkong']}
+tw = pd.DataFrame(cities, columns=['population','area'], index=cities['town'])
+tw.plot(title='Population in the world')
+plt.xlabel('City')
+plt.show()
+
+#將上述population單位轉換成人(萬人-->人)
+import pandas as pd
+import matplotlib.pyplot as plt
+cities = {'population': [10000000, 8500000, 8000000, 15000000, 6000000, 8000000], 
+          'area': [400, 500, 850, 300, 200, 320],
+          'town': ['New York', 'Chicago', 'Bankok', 'Tokyo', 'Singapore', 'Hongkong']}
+tw = pd.DataFrame(cities, columns=['population','area'], index=cities['town'])
+tw.plot(title='Population in the world')
+plt.xlabel('City')
+plt.show()
+
+#多個數值軸的設計subplots(), twinx()
+import pandas as pd
+import matplotlib.pyplot as plt
+cities = {'population': [10000000, 8500000, 8000000, 15000000, 6000000, 8000000], 
+          'area': [400, 500, 850, 300, 200, 320],
+          'town': ['New York', 'Chicago', 'Bankok', 'Tokyo', 'Singapore', 'Hongkong']}
+tw = pd.DataFrame(cities, columns=['population','area'], index=cities['town'])
+fig, ax = plt.subplots()
+fig.suptitle('City Statistics')
+ax.set_ylabel('Population')
+ax.set_xlabel('City')
+
+ax2 = ax.twinx() #建立第2個數值軸
+ax2.set_ylabel('Area')
+tw['population'].plot(ax=ax, rot=90) #人口數值線
+tw['area'].plot(ax=ax2, style='g-')  #面積線
+ax.legend(loc=1)   #圖例位置在右上
+ax2.legend(loc=2)  #圖例位置在左上
+plt.show()
+
+#多個數值軸的設計subplots(), twinx()
+import pandas as pd
+import matplotlib.pyplot as plt
+cities = {'population': [10000000, 8500000, 8000000, 15000000, 6000000, 8000000], 
+          'area': [400, 500, 850, 300, 200, 320],
+          'town': ['New York', 'Chicago', 'Bankok', 'Tokyo', 'Singapore', 'Hongkong']}
+tw = pd.DataFrame(cities, columns=['population','area'], index=cities['town'])
+fig, ax = plt.subplots()
+fig.suptitle('City Statistics')
+ax.set_ylabel('Population')
+ax.set_xlabel('City')
+ax.ticklabel_format(style='plain')  #讓y軸面積單位變成原單位
+ax2 = ax.twinx() #建立第2個數值軸
+ax2.set_ylabel('Area')
+tw['population'].plot(ax=ax, rot=90) #人口數值線
+tw['area'].plot(ax=ax2, style='g-')  #面積線
+ax.legend(loc=1)   #圖例位置在右上
+ax2.legend(loc=2)  #圖例位置在左上
+plt.show()
+
+#用Series畫圓餅圖 plot.pie()
+import pandas as pd
+import matplotlib.pyplot as plt
+
+fruits = ['Apples', 'Bananas', 'Grapes', 'Pears', 'Oranges']
+s = pd.Series([2300, 5000, 1200, 2500, 2900], index=fruits, name='Fruits Shop')
+explode = [0.4, 0.1, 0.2, 0.1, 0]
+s.plot.pie(explode = explode, autopct='%1.2f%%')
+plt.show()
