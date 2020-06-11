@@ -1,0 +1,98 @@
+#Time Series: datetime
+#列出現在時間
+from datetime import datetime
+timeNow = datetime.now()
+print(type(timeNow))
+print('現在時間: ', timeNow)
+print('年 : ', timeNow.year)
+print('月 : ', timeNow.month)
+print('日 : ', timeNow.day)
+print('時 : ', timeNow.hour)
+print('分 : ', timeNow.minute)
+print('秒 : ', timeNow.second)
+
+#設定特定時間 xtime = datetime.datetime(年, 月, 日, 時, 分, 秒)
+from datetime import datetime
+timeStop = datetime(2019, 3, 11, 22, 27, 10)
+while datetime.now() < timeStop:
+    print('Program is sleeping', end='')
+print('Wake up')
+
+#一段時間deltaTime = datetime.timedelta(weeks=xx, days=xx, hours=xx, minutes=xx, seconds=xx)
+from datetime import datetime, timedelta
+deltaTime = timedelta(days=3, hours=5, minutes=8, seconds=10)
+print(deltaTime.days, deltaTime.seconds, deltaTime.microseconds)
+print(deltaTime.total_seconds())
+
+#使用datetime建立含5天(時間戳)的Series物件
+import pandas as pd
+from datetime import datetime, timedelta
+ndays = 5
+start = datetime(2019, 3, 11)
+dates = [start + timedelta(days=x) for x in range(0, ndays)]
+data = [34, 44, 65, 53, 39]
+ts = pd.Series(data, index=dates) #對於時間序列而言(time series), 就是將索引index用日期取代
+print(type(ts))
+print(ts)
+
+#時間序列的運算
+import pandas as pd
+from datetime import datetime, timedelta
+ndays = 5
+start = datetime(2019, 3, 11)
+dates = [start + timedelta(days=x) for x in range(0, ndays)]
+data1 = [34, 44, 65, 53, 39]
+ts1 = pd.Series(data, index=dates) #對於時間序列而言(time series), 就是將索引index用日期取代
+
+data2 = [34, 44, 65, 53, 39]
+ts2 = pd.Series(data, index=dates)
+
+addts = ts1 + ts2
+print('ts1+ts2')
+print(addts)
+
+meants = (ts1+ts2) / 2
+print('(ts1+ts2) / 2')
+print(meants)
+
+#若時間戳不一樣，相加會產生NaN
+import pandas as pd
+from datetime import datetime, timedelta
+ndays = 5
+start = datetime(2019, 3, 11)
+dates1 = [start + timedelta(days=x) for x in range(0, ndays)]
+data1 = [34, 44, 65, 53, 39]
+ts1 = pd.Series(data, index=dates1) 
+
+dates2 = [start - timedelta(days=x) for x in range(0, ndays)]
+data2 = [34, 44, 65, 53, 39]
+ts2 = pd.Series(data, index=dates2)
+
+addts = ts1 + ts2
+print('ts1+ts2')
+print(addts)
+
+#取出一段時間區間 date_range()
+import pandas as pd
+dates = pd.date_range('3/11/2019', '3/15/2019') #設定起始日和終止日
+#dates = pd.date_range(start='3/11/2019', periods=5) #設定起始日和期間
+#dates = pd.date_range(end='3/15/2019', periods=5) #設定終止日和期間
+#dates = pd.date_range('3/11/2019', '3/15/2019', freq='B') #only include work day, not include weekends
+#freq='M':期間內的月底 ; freq='W-Mon':期間內的每周一; A:年末 ; AS:年初 ; Q:季末 ; QS:季初 ; H:小時 ; T:分鐘 ; S:秒
+
+data = [34, 44, 65, 53, 39]
+ts = pd.Series(data, index=dates)
+print(type(ts))
+print(ts)
+
+#將時間序列繪製折線圖
+import pandas as pd
+import matplotlib.pyplot as plt
+
+dates = pd.date_range('3/11/2019', '3/15/2019')
+data = [34, 44, 65, 53, 39]
+ts = pd.Series(data, index=dates)
+ts.plot(title='Data in Time Series')
+plt.xlabel('Date')
+plt.ylabel('Data')
+plt.show()
