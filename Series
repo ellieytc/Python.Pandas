@@ -1,0 +1,71 @@
+#使用list建立Series物件
+import pandas as pd
+s1 = pd.Series([11,22,33,44,55])
+print(s1)
+print(s1[1])
+s1[1]=20
+print(s1[1])
+
+#使用python dict建立Series物件
+import pandas as pd
+mydict = {'北京':'Beijing', '東京':'Tokyo'}
+s2 = pd.Series(mydict)
+print(s2)
+
+#使用Numpy的ndarray建立Series物件
+import pandas as pd
+import numpy as np
+s3 = pd.Series(np.arange(0, 7, 2))
+print(s3)
+
+#建立有索引的Series物件
+myindex = [3, 5, 7]
+price = [100, 200, 300]
+s4 = pd.Series(price, index=myindex)
+print(s4)
+print()
+s5 = pd.Series([30, 50, 40], index=['Orange', 'Apple', 'Grape'])
+print(s5)
+print(s5.values)
+print(s5.index)
+
+#使用純量建立Series物件
+s6 = pd.Series(9, index=[1, 2, 3])
+print(s6)
+
+#Series的運算
+s = pd.Series([0, 1, 2, 3, 4, 5])
+print(s[2:4])
+print(s[:3])
+print(s[2:])
+print(s[-1:])
+
+#Series物件相加/相乘
+x = pd.Series([1, 2])
+y = pd.Series([3, 4])
+print(x + y)
+print(x * y)
+
+#邏輯運算應用在Series物件
+x = pd.Series([1, 5, 9])
+y = pd.Series([2, 3, 8])
+print(x > y)
+
+#相同索引可相加
+fruits = ['Orange', 'Apple', 'Grape']
+x1 = pd.Series([20, 30, 40], index=fruits)
+x2 = pd.Series([25, 38, 55], index=fruits)
+y = x1 + x2
+print(y)
+print()
+print(x1['Apple'])
+print()
+print(x1[['Orange', 'Apple', 'Grape']])
+
+#將純量和函數應用在Series上
+fruits = ['Orange', 'Apple', 'Grape']
+x = pd.Series([20, 30, 40], index = fruits)
+print((x + 10) * 2)
+print(np.sin(x))
+
+
