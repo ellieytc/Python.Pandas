@@ -1,0 +1,205 @@
+### 索引參照屬性 ###
+import pandas as pd
+cities = {'Country': ['China', 'China', 'Thailand', 'Japan', 'Singapore'], 
+          'Town': ['Beijing', 'Shanghai', 'Bangkok', 'Tokyo', 'Singapore'],
+          'Population': [2000, 2300, 900, 1600, 600]}
+df = pd.DataFrame(cities, columns=['Town', 'Population'], index=cities['Country'])
+print(df)
+
+#使用at屬性，取出列是Japan、欄位是Town
+df.at['Japan', 'Town']
+
+#使用at屬性，取出列是China、欄位是Town
+df.at['China', 'Town']
+
+#使用iat屬性，取出row是2、column是o
+df.iat[2, 0]
+
+#使用loc屬性，取出row是Singapore
+df.loc['Singapore']
+
+#使用loc屬性，取出row是Japna和Thailand
+df.loc[['Japan', 'Thailand']]
+
+#使用loc屬性，取出row是China:Thailand, column是Town:Population
+df.loc['China':'Thailand', 'Town':'Population']
+
+#使用iloc屬性，取出row是0
+df.iloc[0]
+
+
+### 直接索引 ###
+#取得Town
+df['Town']
+
+#直接索引取得column是Town, row是Japan
+df['Town']['Japan']
+
+#直接索引取得column是Town和population
+df[['Town','Population']]
+
+#直接索引取得row是編號3之前的資料
+df[:3]
+
+#直接索引取得population大於1000的資料
+df[df['Population'] > 1000]
+
+
+### 四則運算方法 ###
+#加法與減法
+s1 = pd.Series([1, 2, 3])
+s2 = pd.Series([4, 5, 6])
+x = s1.add(s2)
+y = s1.sub(s2)
+print(x)
+
+#乘法與除法
+data1 = [{'a':10, 'b':20}, {'a':30, 'b':40}]
+df1 = pd.DataFrame(data1)
+data2 = [{'a':1, 'b':2}, {'a':3, 'b':4}]
+df2 = pd.DataFrame(data2)
+x = df1.mul(df2)
+y = df1.div(df2)
+print(x)
+print(y)
+
+#Nan運算
+s1 = pd.Series([1, np.nan, 5])
+s2 = pd.Series([np.nan, 6, 8])
+x = s1.add(s2)
+print(x)
+
+
+### 邏輯運算方法 ###
+s1 = pd.Series([1, 5, 8])
+s2 = pd.Series([2, 4, 8])
+x = s1.gt(s2)
+y = s1.eq(s2)
+print(x)
+print(y)
+
+
+### Numpy的函數應用在Pandas ###
+#將Numpy的函數square()應用在Series
+import numpy as np
+import pandas as pd
+s = pd.Series([1, 2, 3])
+x = np.square(s)
+print(x)
+
+#將Numpy的隨機值函數randint()應用在建立DataFrame物件
+#假設有一個課程第一次、第二次和最後成績皆是用隨機數，分數在60~99之間
+import pandas as pd
+import numpy as np
+name = ['Frank', 'Peter', 'John']
+score = ['First', 'Second', 'Third']
+df = pd.DataFrame(np.random.randint(60,100,size=(3,3)), columns=name, index=score)
+print(df)
+
+### NaN的處理 ###
+# isna() & notna()
+df = pd.DataFrame([[1, 2, 3], [4, np.nan, 6], [7, 8, np.nan]])
+print(df)
+print()
+x = df.isna()
+print(x)
+print()
+y = df.notna()
+print(y)
+
+#在Nan填上0
+z = df.fillna(0)
+print(z)
+
+#dropna()如果不含參數，會刪除有Nan的row
+a = df.dropna()
+print(a)
+
+#刪除有Nan的欄位
+b = df.dropna(axis='columns')
+print(b)
+
+
+### 統計函數 ###
+import pandas as pd
+cities = {'Country': ['China', 'China', 'Thailand', 'Japan', 'Singapore'], 
+          'Town': ['Beijing', 'Shanghai', 'Bangkok', 'Tokyo', 'Singapore'],
+          'Population': [2000, 2300, 900, 1600, 600]}
+df = pd.DataFrame(cities, columns=['Town', 'Population'], index=cities['Country'])
+print(df)
+
+#列出這些城市的人口總計sum()，和累積人口總計cumsum()
+x = df['Population'].sum()
+print(x)
+print()
+y = df['Population'].cumsum()
+print(y)
+
+#新增一欄cum_population
+df['Cum_Population'] = y
+print(df)
+
+#列出最多與最小人口數
+print(df['Population'].max())
+print(df['Population'].min())
+
+#建立大學學測分數
+import pandas as pd
+course = ['Chinese', 'English', 'Math', 'Natural', 'Society']
+chinese = [14, 12, 13, 10, 13]
+eng = [13, 14, 11 , 10, 15]
+math = [15, 9, 12, 8, 15]
+nature = [15, 10, 13, 10 ,15]
+social = [12, 11, 14, 9 , 14]
+
+df = pd.DataFrame([chinese, eng, math, nature, social], 
+                   columns = course, 
+                   index = range(1, 6))
+print(df)
+
+#列出每位學生的總分數approach1
+print('student1 = ', df.iloc[0].sum())
+print('student2 = ', df.iloc[1].sum())
+print('student3 = ', df.iloc[2].sum())
+print('student4 = ', df.iloc[3].sum())
+print('student5 = ', df.iloc[4].sum())
+
+#列出每位學生的總分數approach2
+total = [df.iloc[i].sum() for i in range(0, 5)]
+print(total)
+
+#新增一欄總分
+df['Total'] = total
+print(df)
+
+#列出各科平均分數，與平均分數的總分，並新增平均分數的欄位(新增index, 用loc屬性)
+ave = df.mean()
+print(ave)
+print()
+df.loc['Average'] = ave
+print(df)
+
+#刪除index
+df = df.drop(index=['Average'])
+print(df)
+
+
+#排序 sort_values()
+#將total欄位從大排到小
+df = df.sort_values(by ='Total', ascending = False)
+print(df)
+
+#增加名次欄位，並填入名次ranking
+rank = range(1, 6)
+df['Ranking'] = rank
+print(df)
+
+#設定同分數有相同名次
+for i in range(1, 5):
+    if df.iat[i, 5] == df.iat[i-1, 5]:
+        df.iat[i, 6] = df.iat[i-1, 6]
+print(df)
+
+#依照index重新排序 sort_index()
+df = df.sort_index()
+print(df)
