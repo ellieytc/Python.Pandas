@@ -1,0 +1,54 @@
+#寫入csv格式檔案
+import pandas as pd
+course = ['Chinese', 'English', 'Math', 'Natural', 'Society']
+chinese = [14, 12, 13, 10, 13]
+eng = [13, 14, 11 , 10, 15]
+math = [15, 9, 12, 8, 15]
+nature = [15, 10, 13, 10 ,15]
+social = [12, 11, 14, 9 , 14]
+
+df = pd.DataFrame([chinese, eng, math, nature, social], 
+                   columns = course, 
+                   index = range(1, 6))
+df.to_csv('pd_pracetice1.csv')
+df.to_csv('pd_pracetice2.csv', header=False, index=False)
+
+#讀取csv格式檔案
+import pandas as pd
+x = pd.read_csv('pd_pracetice1.csv', index_col=0)
+y = pd.read_csv('pd_pracetice2.csv', names=['Chinese', 'English', 'Math', 'Natural', 'Society'])
+print(x)
+3print(y)
+
+!pip install openpyxl
+!pip install xlrd
+
+#讀取excel檔案
+import pandas as pd
+fn = 'score.xlsx'
+df = pd.read_excel(fn)
+print(df)
+
+#寫入excel檔案
+import pandas as pd
+fn = 'score_out.xlsx'
+df = pd.DataFrame({'Name': ['Tom', 'John'],
+                   'Math': [88, 92],
+                   'English': [76, 97],
+                   'Total': [164, 188]})
+df.to_excel(fn, index=False)
+
+#寫入多個工作表ExcelWriter()
+import pandas as pd
+fn = 'score_out2.xlsx'
+df_test1 = pd.DataFrame({'Name': ['Tom', 'John'],
+                   'Math': [88, 92],
+                   'English': [76, 97],
+                   'Total': [164, 188]})
+df_test2  = pd.DataFrame({'Name': ['Tom', 'John'],
+                   'Math': [100, 92],
+                   'English': [99, 96],
+                   'Total': [199, 188]})
+with pd.ExcelWriter(fn) as writer:
+    df_test1.to_excel(writer, index=False, sheet_name='test1')
+    df_test2.to_excel(writer, index=False, sheet_name='test2')
