@@ -55,3 +55,6 @@
     - plot(x=None, y=None, kind='xx', title=None, legend=True, rot=None) #kind=line, bar, barh, host, boxscatter. #rot旋轉刻度
     
 ## 時間序列(Time Series)
+
+
+*reference : 洪錦魁(2019)。Python最強入門邁向數據科學之路:王者歸來(第二版)。臺北市：深智數位。
